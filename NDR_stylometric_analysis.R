@@ -8,23 +8,24 @@ files <- dir(files_loc, full.names = TRUE)
 text <- c()
 for (f in files) {
   text <- c(text, paste(readLines(f, warn = FALSE), collapse = "\n"))
-}
+} #Copies the text of each rally into a vector
 
 years <- c(2004:2019, 2021:2023)
 
 text %<>% as_tibble(.name_repair = "unique") %>%
-  mutate(year = years)
+  mutate(year = years) #Adds the corresponding year to each text
 
-#Counts the number of words for each speech
+#Counts the number of words for each speech and plots the graph
 words <- tokenize_words(text$value)
 
 words_plot <- text %>%
   ggplot(aes(x = year, y = sapply(words, length))) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method = "lm")
 
 words_plot
 
-#Counts median sentence length for each speech
+#Counts median sentence length for each speech and plots the graph
 sentences <- tokenize_sentences(text$value)
 sentence_words <- sapply(sentences, tokenize_words)
 

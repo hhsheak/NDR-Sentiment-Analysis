@@ -7,10 +7,10 @@ files <- c("/Users/hhshe/OneDrive/Documents/Desktop/NDR/2007.txt", "/Users/hhshe
 text <- c()
 for (f in files) {
   text <- c(text, paste(readLines(f, warn = FALSE), collapse = "\n"))
-}
+} #Copies the text of each rally into a vector
 
 text_word_2007 <- get_tokens(text[1])
-sentiment_2007 <- get_nrc_sentiment(text_word_2007, lang = "english")
+sentiment_2007 <- get_nrc_sentiment(text_word_2007, lang = "english") #Tokenises the texts and performs sentiment analysis on them
 
 text_word_2008 <- get_tokens(text[2])
 sentiment_2008 <- get_nrc_sentiment(text_word_2008, lang = "english")
@@ -119,9 +119,9 @@ sentiment_time_2008 <- data.frame(
 )
 
 sentiment_plot <- ggplot() +
-  geom_line(data = sentiment_time_2007, aes(x = time, y = valence, colour = "green")) +
-  geom_line(data = sentiment_time_2008, aes(x = time, y = valence, colour = "red")) +
-  scale_color_discrete(labels = c("2008", "2007")) +
+  geom_line(data = sentiment_time_2007, aes(x = time, y = valence, color = "2007")) +
+  geom_line(data = sentiment_time_2008, aes(x = time, y = valence, color = "2008")) +
+  scale_color_manual(values = c("2007" = "green", "2008" = "red")) +
   labs(color = "Year", y = "sentiment", title = "Sentiment over time")
 
 sentiment_plot
